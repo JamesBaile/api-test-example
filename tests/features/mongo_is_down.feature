@@ -8,10 +8,6 @@ Feature:
     When I GET /health
     Then response code should be 200
 
-  Scenario: I want to check that the MongoDB dependency is not ok
-    When I GET /health
-    Then response body path $.isOk should be false
-
 Scenario: Saving a customer results in a FailedDependency response
     Given I set body to {"name":"Compare The Market"}
     When I POST to /customer

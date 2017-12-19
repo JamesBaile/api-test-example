@@ -1,3 +1,5 @@
+@core @customer-storage-post
+
 Feature:
   Scenario: I can save an customer
     Given I set body to {"name":"Compare The Market", "customerI" : "test-id" }

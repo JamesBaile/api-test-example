@@ -70,7 +70,7 @@ echo Running outside-in tests
 echo ===========================================================
 echo
 
-docker run --net=api-test-example.network --rm -e CUSTOMER_DETAILS_HOSTNAME=app:8081 --name tests api-test-example.test cucumberjs --tags @core
+docker run --net=api-test-example.network --rm -e SERVICE_UNDER_TEST_HOSTNAME=app:3000 --name tests api-test-example.test cucumberjs --tags @core
 
 echo
 echo ===========================================================
@@ -80,4 +80,4 @@ echo
 
 docker network disconnect api-test-example.network mongodb
 
-docker run --net=api-test-example.network --rm -e CUSTOMER_DETAILS_HOSTNAME=app:8081 --name tests api-test-example.test cucumberjs --tags @no_mongo
+docker run --net=api-test-example.network --rm -e SERVICE_UNDER_TEST_HOSTNAME=app:3000 --name tests api-test-example.test cucumberjs --tags @mongo_is_down

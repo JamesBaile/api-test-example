@@ -1,4 +1,4 @@
-@core @customer-storage-get
+@score @customer-storage-get
 Feature: Getting an enquiry
 
   Scenario: I try to get an existing customer

@@ -23,13 +23,13 @@ app.use(bodyParser.urlencoded({
 var router = express.Router();
 
 router.get('/health', function (req, res) {
-    res.json({ serviceName: 'api-test', version: "1.0.0.1" });
+    res.json({ serviceName: 'api-test', version: "1.0.0.1", isOK: true });
 });
 
 router.get('/customer:customerid', function (req, res) {
     Customer.findById(req.params.customerid, function (err, customer) {
         if (err)
-            res.send(err);
+            res.status(424).send(err);
 
         res.json(customer);
     });
@@ -44,9 +44,9 @@ router.post('/customer', function (req, res) {
 
     customer.save(function (err) {
         if (err)
-            res.send(err);
+            res.status(424).send(err);
 
-        res.json({ message: 'Customer usage saved', data: customer });
+        res.status(201).json({ message: 'Customer usage saved', data: customer });
     });
 });
 
