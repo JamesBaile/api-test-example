@@ -13,6 +13,6 @@ Feature:
     Then response body path $.isOk should be false
 
 Scenario: Saving a customer results in a FailedDependency response
-    Given I save a valid customer
+    Given I set body to {"name":"Compare The Market"}
     When I POST to /customer
     Then response code should be 424
