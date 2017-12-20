@@ -6,7 +6,7 @@ Feature:
     When I POST to /customer
     Then response code should be 201
 
-    Scenario Outline: Saving an invalid customer should result in a BadRequest response
+  Scenario: Saving an invalid customer should result in a BadRequest response
     Given I set body to {}
     When I POST to /customer
     Then response code should be 400
