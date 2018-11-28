@@ -1,0 +1,215 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "API testing example",
+        "description": "API of a simple service that stores a customer",
+        "version": "1.0.0",
+        "contact": {
+            "name": "James Baile",
+            "url": "https://github.com/JamesBaile/api-test-example",
+            "email": "james.baile@comparethemarket.com"
+        }
+    },
+
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/",
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/ping": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "The service is alive",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "The health of the service",
+                        "schema": {
+                            "$ref": "#/definitions/HealthModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/{customerid}": {
+            "get": {
+                "summary": "Retrieves the customer",
+                "description": "Passes the risk to risk-validator for {product} and if response is 200 then it submits the enquiry to Quoting\n",
+                "parameters": [{
+                        "name": "customerid",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer has been updated",
+                        "schema": {
+                            "$ref": "#/definitions/Customer"
+                        }
+                    },
+                    "404": {
+                        "description": "The customer was not found"
+                        }
+                    }
+                }
+            },
+        "/customer": {
+            "post": {
+                "summary": "Submits the customer",
+                "description": "Submits the customer and if valid saves it for subsequent retrieval.",
+                "parameters": [{
+                        "name": "customerid",
+                        "in": "path",
+                        "description": "Customer Id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "customer",
+                        "in": "body",
+                        "description": "Customer",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Customer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer has been updated"
+                    },
+                    "201": {
+                        "description": "Customer has been created",
+                        "headers": {
+                            "location": {
+                                "type": "string",
+                                "format": "uri",
+                                "description": "will be the URI pointing to the customer created"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Customert is invalid or incomplete",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ValidationResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+        "definitions": {
+            "Customer": {
+                "type": "object",
+                "properties": {
+                    "customerId": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "token",
+                    "risk",
+                    "meta"
+                ]
+            },
+           
+            "ValidationResponse": {
+                "type": "object",
+                "properties": {
+                    "errors": {
+                        "type": "array",
+                        "description": "Collection of errors in the risk",
+                        "items": {
+                            "$ref": "#/definitions/ValidationError"
+                        }
+                    }
+                }
+            },
+            "ValidationError": {
+                "type": "object",
+                "properties": {
+                    "propertName": {
+                        "type": "string",
+                        "description": "Property name"
+                    },
+                    "errorMessage": {
+                        "type": "string",
+                        "description": "Error message for the validation rule"
+                    },
+                    "isIncomplete": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "HealthModel": {
+                "type": "object",
+                "properties": {
+                    "serviceName": {
+                        "type": "string"
+                    },
+                    "isOk": {
+                        "type": "boolean"
+                    },
+                    "version": {
+                        "type": "string"
+                    },
+                    "dependencies": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "serviceName": {
+                                    "type": "string"
+                                },
+                                "uri": {
+                                    "type": "string"
+                                },
+                                "isOk": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "serviceName",
+                                "uri",
+                                "isOk"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [
+                    "serviceName",
+                    "isOk",
+                    "version"
+                ],
+                "additionalProperties": false
+            }
+    }
+}

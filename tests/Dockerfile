@@ -1,6 +1,6 @@
 FROM node:latest
 
-RUN npm install -g cucumber@1.3.3
+RUN npm install cucumber
 
 RUN mkdir -p /usr/src/app
 COPY . /usr/src/app

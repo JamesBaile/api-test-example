@@ -2,7 +2,9 @@
 
 Feature:
   Scenario: I can save an customer
-    Given I set body to {"name":"Compare The Market", "customerI" : "test-id" }
+  #  Given I store the raw value {"key":"hello-world"} as myPayload in scenario scope
+		# Given I set body to {"key":"hello-world"}
+    Given I set body to {"name":"Compare The Market", "customerId" : "test-id" }
     When I POST to /customer
     Then response code should be 201
 

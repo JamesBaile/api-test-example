@@ -42,12 +42,19 @@ router.post('/customer', function (req, res) {
     customer.customerId = req.body.customerId;
     customer.name = req.body.name;
 
-    customer.save(function (err) {
-        if (err)
-            res.status(424).send(err);
+    console.log("request body = " + JSON.stringify(req.body));
 
-        res.status(201).json({ message: 'Customer usage saved', data: customer });
-    });
+    console.log("customer id = " + customer.customerId + ', customer name = ' + customer.name);
+    if (customer.name){
+        customer.save(function (err) {
+            if (err)
+                res.status(424).send(err);
+
+            res.status(201).json({ message: 'Customer usage saved', data: customer });
+            return;
+        });
+    }
+    res.status(400).send();
 });
 
 app.use('/', router);

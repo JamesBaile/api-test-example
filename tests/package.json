@@ -3,8 +3,8 @@
     "version": "0.0.1",
     "description": "Out side in tests of the app",
     "dependencies": {
-      "cucumber": "1.3.3",
-      "apickli": "1.7.4"
+      "cucumber": "latest",
+      "apickli": "latest"
     },
      "scripts": {
       "test": "./node_modules/.bin/cucumberjs"

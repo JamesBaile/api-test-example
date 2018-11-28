@@ -49,6 +49,7 @@ echo ===========================================================
 echo
 
 docker build -t api-test-example ./app
+docker build -t api-test-example-stub ./stub
 docker build -t api-test-example.test ./tests
 
 echo
@@ -70,7 +71,7 @@ echo Running outside-in tests
 echo ===========================================================
 echo
 
-docker run --net=api-test-example.network --rm -e SERVICE_UNDER_TEST_HOSTNAME=app:3000 --name tests api-test-example.test cucumberjs --tags @core
+docker run --net=api-test-example.network --rm -e SERVICE_UNDER_TEST_HOSTNAME=app:3000 --name tests api-test-example.test ./node_modules/.bin/cucumber-js --tags @core
 
 echo
 echo ===========================================================
