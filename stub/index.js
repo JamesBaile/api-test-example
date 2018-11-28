@@ -41,12 +41,12 @@ router.get('/customer:customerid', function (req, res) {
 });
 
 router.post('/customer', function (req, res) {
-    if (req.body == {}){
-        res.status(400).send();
+    if (req.body.name){
+        res.status(201).json({ message: 'Customer usage saved', data: req.body });
+        customers[req.body.customerId] = req.body; // Save the customer in memory
+        return;   
     }
-    customers[req.body.customerId] = req.body;
-
-    res.status(201).json({ message: 'Customer usage saved', data: req.body });
+    res.status(400).send();
 });
 
 app.use('/', router);

@@ -63,6 +63,8 @@ docker network create -d bridge api-test-example.network
 docker run -d --net=api-test-example.network --name mongodb mongo
 sleep 1
 docker run -d --net=api-test-example.network -e MONGO=mongodb://mongodb:27017/customerdetails --name app api-test-example
+# comment out the docker run above and uncomment the docker run below. The tests will then run against the stub - the mongo down tests will fail 
+# docker run -d --net=api-test-example.network -e MONGO=mongodb://mongodb:27017/customerdetails --name app api-test-example-stub
 sleep 1
 
 echo
