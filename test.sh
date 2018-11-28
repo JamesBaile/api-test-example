@@ -81,4 +81,4 @@ echo
 
 docker network disconnect api-test-example.network mongodb
 
-docker run --net=api-test-example.network --rm -e SERVICE_UNDER_TEST_HOSTNAME=app:3000 --name tests api-test-example.test cucumberjs --tags @mongo_is_down
+docker run --net=api-test-example.network --rm -e SERVICE_UNDER_TEST_HOSTNAME=app:3000 --name tests api-test-example.test ./node_modules/.bin/cucumber-js --tags @mongo_is_down

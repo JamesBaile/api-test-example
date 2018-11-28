@@ -9,6 +9,7 @@ Feature:
     Then response code should be 200
 
 Scenario: Saving a customer results in a FailedDependency response
-    Given I set body to {"name":"Compare The Market"}
+    Given I pipe contents of file ./payload/customer.json to body
+    And I set Content-Type header to application/json
     When I POST to /customer
     Then response code should be 424

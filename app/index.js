@@ -10,7 +10,9 @@ var mongoConnection = process.env.MONGO || 'mongodb://mongo:27017/api-test';
 
 console.log(mongoConnection);
 
+
 mongoose.connect(mongoConnection);
+
 mongoose.Promise = global.Promise;
 
 var app = express();
@@ -36,28 +38,37 @@ router.get('/customer:customerid', function (req, res) {
 });
 
 router.post('/customer', function (req, res) {
+    if (mongoose.connection.readyState != 1){
+        res.status(424).send();
+                return
+    }
 
     var customer = new Customer();
 
     customer.customerId = req.body.customerId;
     customer.name = req.body.name;
 
+   
     console.log("request body = " + JSON.stringify(req.body));
 
-    console.log("customer id = " + customer.customerId + ', customer name = ' + customer.name);
+    //console.log("customer id = " + customer.customerId + ', customer name = ' + customer.name);
     if (customer.name){
         customer.save(function (err) {
-            if (err)
+            if (err){
+                console.log('Error saving customer ' + JSON.stringify(err));
                 res.status(424).send(err);
-
+                return;
+            }
             res.status(201).json({ message: 'Customer usage saved', data: customer });
             return;
         });
+    } else {
+        res.status(400).send();
     }
-    res.status(400).send();
 });
 
 app.use('/', router);
+
 
 app.listen(port);
 
