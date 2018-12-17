@@ -1,5 +1,5 @@
 {
-    "name": "enquiry-storage-tests",
+    "name": "standard docker image",
     "version": "0.0.1",
     "description": "Out side in tests of the app",
     "dependencies": {
