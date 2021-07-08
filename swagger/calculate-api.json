@@ -1,0 +1,84 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "API testing example",
+      "description": "API of a simple service that performns a calculation",
+      "version": "1.0.0",
+      "contact": {
+        "name": "James Baile",
+        "url": "https://github.com/JamesBaile/api-test-example",
+        "email": "james.baile@comparethemarket.com"
+      }
+    },
+    "schemes": [
+      "https"
+    ],
+    "basePath": "/",
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/ping": {
+        "get": {
+          "responses": {
+            "200": {
+              "description": "The service is alive",
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "/calculate": {
+        "post": {
+          "summary": "Submits values to be calculated, performs the calculation and returns the result",
+          "parameters": [
+            {
+              "name": "values",
+              "in": "body",
+              "description": "Values",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Values"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Calculation performed OK",
+              "schema": {
+                "type": "number"
+              }
+            },
+            "400": {
+              "description": "Values are invalid",
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Values": {
+        "type": "object",
+        "properties": {
+          "firstValue": {
+            "type": "number"
+          },
+          "secondValue": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "firstValue",
+          "secondValue"
+        ]
+      }
+    }
+  }
